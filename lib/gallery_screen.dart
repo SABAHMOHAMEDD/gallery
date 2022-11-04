@@ -1,34 +1,34 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gallery/models/GalleryModel.dart';
 
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
+import 'models/GalleryModel.dart';
 
 class GalleryScreen extends StatelessWidget {
   static const String routeName = 'gallery';
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, States>(
+    return BlocConsumer<MyCubit, States>(
       listener: (context, state) {},
 
       builder: (context, state) {
-        return ConditionalBuilder(
-            condition: ShopCubit.get(context).galleryModel != null  ,
-            builder: (context) =>
-                ProductsBuilder(ShopCubit.get(context).galleryModel),
-            fallback: (context) => Center(
-              child: CircularProgressIndicator(),
-            )); //if it didnot yet show loadindg
+          return   ConditionalBuilder(
+               condition: MyCubit.get(context).model !=null ,
+               builder: (context) =>
+                   ProductsBuilder(MyCubit.get(context).model),
+               fallback: (context) => Center(
+                 child:CircularProgressIndicator(),
+               )); //if it didnot yet show loadindg
+
+
       },
     );
   }
 
-  Widget ProductsBuilder(
-    GalleryModel? model,
-  ) =>
+  Widget ProductsBuilder( GalleryModel? model,) =>
       SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -54,7 +54,7 @@ class GalleryScreen extends StatelessWidget {
                           children: [
                             Image(
                                 height: 200,
-                                image: NetworkImage(model.data?.images![index] ?? ""),
+                                image: NetworkImage(model.data?.images?[index] ?? ""),
                                 width: double.infinity),
                           ]),
                     )),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallery/gallery_screen.dart';
 import 'package:gallery/shared/components/components.dart';
+import 'package:gallery/shared/components/constant.dart';
 import 'package:gallery/shared/network/local/cache_helper.dart';
 
 
@@ -24,28 +25,16 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
         create: (BuildContext context) => LoginCubit(),
         child:
-            BlocConsumer<LoginCubit, LoginStates>(listener: (context, state) {
-          if (state is LoginSuccessState) {
-            if (state.loginModel.status == true) {
-              print(state.loginModel.message.toString());
+            BlocConsumer<LoginCubit, LoginStates>(
+                listener: (context, state) {
+                  CacheHelper.saveData(
+                      key: 'token', value: LoginCubit().loginModel.token)
+                      .then((value) {
+                        token=LoginCubit().loginModel?.token??"";
 
-              showToast(
-                  text: state.loginModel.message ?? "",
-                  state: ToastState.SUCCESS);
+                  });
 
-              print(state.loginModel.data?.token);
-              CacheHelper.saveData(
-                      key: 'token', value: state.loginModel.data?.token)
-                  .then((value) {
 
-                Navigator.pushReplacementNamed(context, GalleryScreen.routeName);
-              });
-            } else {
-              showToast(
-                  text: state.loginModel.message ?? "",
-                  state: ToastState.ERROR);
-            }
-          }
         }, builder: (context, state) {
           return Scaffold(
             body: Center(
@@ -111,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                                     LoginCubit.get(context).userLogin(
                                         email: emailController.text,
                                         password: passwordController.text);
-                                   // Navigator.pushReplacementNamed(context, HomeScreen.RouteName);
+                                    Navigator.pushReplacementNamed(context, GalleryScreen.routeName);
 
                                   }
                                 },

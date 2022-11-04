@@ -22,7 +22,9 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(ChangePasswordVisibilityState());
   }
 
-  void userLogin({
+  void userLogin(
+
+      {
     required String email,
     required String password,
   }) {
@@ -35,6 +37,7 @@ class LoginCubit extends Cubit<LoginStates> {
       },
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
+      print(loginModel.token);
 
 
       emit(LoginSuccessState(loginModel));

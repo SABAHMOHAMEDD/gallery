@@ -1,43 +1,60 @@
+
 class LoginModel {
-  bool? status;
-  String? message;
-  UserData? data;
+  LoginModel({
+      this.user, 
+      this.token,});
 
-  //Named constructor
-  LoginModel.fromJson(Map<String,dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data =json['data'] != null
-
-        ? UserData.fromJson(json['data'])
-
-        :null;
-
-    }
+  LoginModel.fromJson(dynamic json) {
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    token = json['token'];
   }
-
-
-class UserData {
-  int? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? image;
+  User? user;
   String? token;
-  UserData(
-      {this.id,
-      this.name,
-      this.email,
-      this.phone,
-      this.image,
-      this.token});
 
-  UserData.fromJson(Map<String,dynamic> json) {
+  // Map<String, dynamic> toJson() {
+  //   final map = <String, dynamic>{};
+  //   if (user != null) {
+  //     map['user'] = user.toJson();
+  //   }
+  //   map['token'] = token;
+  //   return map;
+  // }
+
+}
+
+class User {
+  User({
+    this.id,
+    this.name,
+    this.email,
+    this.emailVerifiedAt,
+    this.createdAt,
+    this.updatedAt,});
+
+  User.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    phone = json['phone'];
-    image = json['image'];
-    token = json['token'];
+    emailVerifiedAt = json['email_verified_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
+  int? id;
+  String? name;
+  String ?email;
+  String ?emailVerifiedAt;
+  String ?createdAt;
+  String ?updatedAt;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['email'] = email;
+    map['email_verified_at'] = emailVerifiedAt;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
+    return map;
+  }
+
 }

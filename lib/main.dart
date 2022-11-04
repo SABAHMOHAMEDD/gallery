@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallery/gallery_screen.dart';
@@ -16,6 +15,8 @@ WidgetsFlutterBinding.ensureInitialized();
 Bloc.observer = MyBlocObserver();
 DioHelper.init();
 await CacheHelper.init();
+final String? token = CacheHelper.getData(key: 'token');
+
 
 
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
 
 
           BlocProvider(
-            create: (BuildContext context) => ShopCubit()..getGallery()
+            create: (BuildContext context) => MyCubit()..getGallery()
 
     ,
           ),
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
             LoginScreen.RouteName: (_) => LoginScreen(),
           },
 
-          initialRoute: LoginScreen.RouteName,
+          initialRoute: GalleryScreen.routeName,
         ));
   }
 }
