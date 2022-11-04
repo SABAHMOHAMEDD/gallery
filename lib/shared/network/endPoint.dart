@@ -1,5 +1,5 @@
 const MYGALLERY='my-gallery';
-const REGISTER='register';
+const LOGIN='auth/login';
 const HOME='home';
 const GET_CATEGORIES='categories';
 const PROFILE='profile';
