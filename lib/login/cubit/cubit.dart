@@ -12,7 +12,7 @@ class LoginCubit extends Cubit<LoginStates> {
   static LoginCubit get(context) => BlocProvider.of(context);
 
 
-  late LoginModel loginModel;
+  LoginModel? loginModel;
   bool securedPassword = true;
   IconData Suffix = Icons.visibility;
   void ChangePasswordVisibility() {
@@ -37,11 +37,10 @@ class LoginCubit extends Cubit<LoginStates> {
       },
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
-      print(loginModel.token);
-
-
-      emit(LoginSuccessState(loginModel));
+      print(loginModel?.token.toString());
+      emit(LoginSuccessState(loginModel!));
     }).catchError((error) {
+      print('xxxxxxxxxxxxxx');
       emit(LoginErrorState(error.toString()));
     });
   }

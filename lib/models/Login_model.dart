@@ -1,37 +1,41 @@
-
 class LoginModel {
-  LoginModel({
-      this.user, 
-      this.token,});
-
-  LoginModel.fromJson(dynamic json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    token = json['token'];
-  }
   User? user;
   String? token;
 
-  // Map<String, dynamic> toJson() {
-  //   final map = <String, dynamic>{};
-  //   if (user != null) {
-  //     map['user'] = user.toJson();
-  //   }
-  //   map['token'] = token;
-  //   return map;
-  // }
+  LoginModel({this.user, this.token});
 
+  LoginModel.fromJson(Map<String, dynamic> json) {
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    token = json['token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    data['token'] = this.token;
+    return data;
+  }
 }
 
 class User {
-  User({
-    this.id,
-    this.name,
-    this.email,
-    this.emailVerifiedAt,
-    this.createdAt,
-    this.updatedAt,});
+  int? id;
+  String? name;
+  String? email;
+  String? emailVerifiedAt;
+  String? createdAt;
+  String? updatedAt;
 
-  User.fromJson(dynamic json) {
+  User(
+      {this.id,
+        this.name,
+        this.email,
+        this.emailVerifiedAt,
+        this.createdAt,
+        this.updatedAt});
+
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -39,22 +43,15 @@ class User {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
-  int? id;
-  String? name;
-  String ?email;
-  String ?emailVerifiedAt;
-  String ?createdAt;
-  String ?updatedAt;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['email'] = email;
-    map['email_verified_at'] = emailVerifiedAt;
-    map['created_at'] = createdAt;
-    map['updated_at'] = updatedAt;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
   }
-
 }

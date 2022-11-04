@@ -11,56 +11,65 @@ class GalleryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MyCubit, States>(
-      listener: (context, state) {},
+    return BlocProvider(
+      create: (BuildContext context) => MyCubit()..getGallery(),
+      child: BlocConsumer<MyCubit, States>(
+        listener: (context, state) {
 
-      builder: (context, state) {
-          return   ConditionalBuilder(
-               condition: MyCubit.get(context).model !=null ,
-               builder: (context) =>
-                   ProductsBuilder(MyCubit.get(context).model),
-               fallback: (context) => Center(
-                 child:CircularProgressIndicator(),
-               )); //if it didnot yet show loadindg
-
-
-      },
+        },
+        builder: (context, state) {
+            return   ConditionalBuilder(
+                 condition: MyCubit.get(context).model !=null ,
+                 builder: (context) =>
+                     ProductsBuilder(MyCubit.get(context).model),
+                 fallback: (context) => Center(
+                   child:CircularProgressIndicator(),
+                 )); //if it didnot yet show loadindg
+        },
+      ),
     );
   }
 
   Widget ProductsBuilder( GalleryModel? model,) =>
       SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              color: Colors.grey[300],
-              child: Expanded(
-                child: GridView.count(
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
-                    shrinkWrap: true,
-                    childAspectRatio: 1 / 1.7,
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    children: List.generate(
-                      model!.data!.images!.length,
-                      (index) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image(
-                                height: 200,
-                                image: NetworkImage(model.data?.images?[index] ?? ""),
-                                width: double.infinity),
-                          ]),
-                    )),
-              ),
-            )
-          ],
+        child: Container(
+           decoration: BoxDecoration(
+          //   color: Colors.red,
+             image: DecorationImage(image: AssetImage('assets/images/background.jpg')
+             //NetworkImage('https://technichal.prominaagency.com/media/202/gallery–background.png')
+           )
+           ),
+        //  color: Colors.grey[300],
+          child: Expanded(
+            child: GridView.count(
+
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                shrinkWrap: true,
+                childAspectRatio: 1 / 1.7,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 3,
+                children: List.generate(
+                  model!.data!.images!.length,
+                  (index) => Column(
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                  Card(
+
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+                elevation: 5,
+                child:Image(
+                 // fit: BoxFit.cover,
+                    height: 108,
+                    image: NetworkImage(model.data?.images?[index] ?? ""),
+                    width: 108), ),
+
+                      ]),
+                )),
+          ),
         ),
       );
 }

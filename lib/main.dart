@@ -35,17 +35,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (BuildContext context) => LoginCubit()
           ),
-
-
-          BlocProvider(
-            create: (BuildContext context) => MyCubit()..getGallery()
-
-    ,
-          ),
         ],
         child: MaterialApp(
          debugShowCheckedModeBanner: false,
-
           routes: {
             GalleryScreen.routeName: (_) => GalleryScreen(),
             LoginScreen.RouteName: (_) => LoginScreen(),

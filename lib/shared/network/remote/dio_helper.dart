@@ -13,37 +13,20 @@ class DioHelper {
   }
 
   static Future<Response> getData({
-    required String url,
-    String? token,
-
-  }) async {
-    dio.options.headers = {
-      'Content-Type':'application/json',
-      'Authorization':token,
-
-
-
-
+    required String url ,
+    String? token
+  })
+  async{
+    dio?.options.headers = {
+      'Authorization' : 'Bearer $token'
     };
-
-
-    return await dio.get(
-      url,
-    );
+    return await dio.get(url);
   }
 
   static Future<Response> PostData({
     required String url,
-
     required Map<String, dynamic> data,
   }) async {
-     dio.options.headers = {
-
-     };
-    return await dio.post(url,
-        data: data);
+    return await dio.post(url, data: data);
   }
-
-
-
 }
